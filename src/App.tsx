@@ -40,6 +40,7 @@ function App() {
       title: "Tarefa 5",
     },
   ]);
+  const [title, setTitle] = useState("");
 
   const handleDeleteTask = (id: string) => {
     const newTasks = tasks.filter((t) => t.id !== id);
@@ -56,6 +57,21 @@ function App() {
     setTasks(newTasks);
   };
 
+  const handleAddTask = () => {
+    if (title.length < 4) {
+      return;
+    }
+    const newTask: Task = {
+      id: `${Math.floor(Math.random() * 99999)}`,
+      done: false,
+      title: title,
+    };
+
+    const newTasks = [...tasks, newTask];
+
+    setTasks(newTasks);
+  };
+
   return (
     <div className="min-h-screen flex  flex-col items-center">
       <div className="w-full flex justify-center items-center bg-gray-700 h-52">
@@ -66,8 +82,13 @@ function App() {
           <input
             className="rounded placeholder-gray-300 py-2 px-4 flex flex-1 bg-gray-500 border border-gray-700 mr-2 outline-none focus:border-purple-dark"
             placeholder="Adicione uma nova tarefa"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
-          <button className="rounded bg-blue-dark text-gray-100 flex items-center justify-center min-w-[90px] font-bold text-sm hover:bg-blue transition-colors">
+          <button
+            className="rounded bg-blue-dark text-gray-100 flex items-center justify-center min-w-[90px] font-bold text-sm hover:bg-blue transition-colors"
+            onClick={() => handleAddTask()}
+          >
             Criar
             <PlusCircle className="ml-1" size={20} />
           </button>
