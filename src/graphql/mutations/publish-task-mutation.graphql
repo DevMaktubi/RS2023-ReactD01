@@ -1,0 +1,5 @@
+mutation PublishTask($id: ID!) {
+  publishTask(where: { id: $id }, to: PUBLISHED) {
+    id
+  }
+}

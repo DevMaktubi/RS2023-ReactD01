@@ -1,0 +1,6 @@
+mutation CreateTask($title: String!) {
+  createTask(data: { title: $title, done: false }) {
+    id
+    stage
+  }
+}

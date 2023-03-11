@@ -1,0 +1,6 @@
+mutation ToggleTaskDone($done: Boolean!, $id: ID!) {
+  updateTask(data: { done: $done }, where: { id: $id }) {
+    id
+    done
+  }
+}
