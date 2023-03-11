@@ -46,6 +46,16 @@ function App() {
     setTasks(newTasks);
   };
 
+  const handleCheckTask = (id: string) => {
+    const newTasks = [...tasks];
+    const task = newTasks.find((t) => t.id === id);
+    if (!task) {
+      return;
+    }
+    task.done = !task.done;
+    setTasks(newTasks);
+  };
+
   return (
     <div className="min-h-screen flex  flex-col items-center">
       <div className="w-full flex justify-center items-center bg-gray-700 h-52">
@@ -66,7 +76,7 @@ function App() {
           <div className="flex items-center ">
             <strong className="text-blue text-sm mr-2">Tarefas criadas</strong>
             <span className="rounded-full bg-gray-400 text-center text-xs py-1 px-2">
-              0
+              {tasks?.length ?? 0}
             </span>
           </div>
           <div className="flex items-center ">
@@ -74,7 +84,11 @@ function App() {
               Concluídas
             </strong>
             <span className="rounded-full bg-gray-400 text-center text-xs py-1 px-2">
-              0
+              {tasks?.length > 0
+                ? tasks.filter((t) => t.done === true).length +
+                  " de " +
+                  tasks.length
+                : 0}
             </span>
           </div>
         </div>
@@ -97,7 +111,11 @@ function App() {
             tasks.map((t) => (
               <Task
                 key={t.id}
-                task={{ ...t, onDelete: (id: string) => handleDeleteTask(id) }}
+                task={{
+                  ...t,
+                  onDelete: (id: string) => handleDeleteTask(id),
+                  onCheck: (id: string) => handleCheckTask(id),
+                }}
               />
             ))}
         </div>

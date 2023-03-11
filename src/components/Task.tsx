@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Check, Trash } from "phosphor-react";
 
@@ -8,16 +7,13 @@ interface ChoreProps {
     done: boolean;
     title: string;
     onDelete: (id: string) => void;
+    onCheck: (id: string) => void;
   };
 }
 
-export function Task({ task: { id, title, done, onDelete } }: ChoreProps) {
-  const [checked, setChecked] = useState(false);
-
-  useEffect(() => {
-    setChecked(done);
-  }, [done]);
-
+export function Task({
+  task: { id, title, done, onDelete, onCheck },
+}: ChoreProps) {
   return (
     <div className="bg-gray-500 border border-gray-400 rounded px-2 py-4 flex w-full justify-around items-start mt-6">
       <div className="">
@@ -25,19 +21,19 @@ export function Task({ task: { id, title, done, onDelete } }: ChoreProps) {
           className={classNames(
             "rounded-full h-5 w-5 bg-gray-500 cursor-pointer flex items-center justify-center transition-colors",
             {
-              "ring-none bg-purple-dark hover:bg-purple": checked,
-              "ring-2 ring-blue hover:bg-blue-dark ": !checked,
+              "ring-none bg-purple-dark hover:bg-purple": done,
+              "ring-2 ring-blue hover:bg-blue-dark ": !done,
             }
           )}
-          onClick={() => setChecked(!checked)}
+          onClick={() => onCheck(id)}
         >
-          <Check size={16} className={!checked ? "hidden" : ""} />
+          <Check size={16} className={!done ? "hidden" : ""} />
         </div>
 
         <input
           id="checkbox"
           type="checkbox"
-          checked={checked}
+          checked={done}
           className="hidden"
         />
       </div>
@@ -45,7 +41,7 @@ export function Task({ task: { id, title, done, onDelete } }: ChoreProps) {
         className={classNames(
           "text-sm text-start max-w-xl flex transition-all flex-1",
           {
-            "line-through text-gray-300": checked,
+            "line-through text-gray-300": done,
           }
         )}
       >
