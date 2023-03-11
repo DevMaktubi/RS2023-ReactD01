@@ -11,8 +11,6 @@ interface Task {
 }
 
 function App() {
-  const hasTasks = true;
-
   const [tasks, setTasks] = useState<Task[]>([
     {
       id: "task1",
@@ -114,7 +112,7 @@ function App() {
           </div>
         </div>
         <div className="flex flex-col w-full">
-          {!hasTasks && (
+          {tasks.length <= 0 && (
             <>
               <div className="w-full rounded-lg border-t border-t-gray-400 mt-6 h-2" />
               <div className="flex flex-col justify-center items-center mt-2 h-64">
@@ -128,7 +126,7 @@ function App() {
               </div>
             </>
           )}
-          {hasTasks &&
+          {tasks.length > 0 &&
             tasks.map((t) => (
               <Task
                 key={t.id}
